@@ -3,9 +3,13 @@
     <ol>
         <li *ngFor="let item of equipmentItems">
             <!-- "Add to Cargo Hold" button goes here. -->
-            <button [disabled] = "cargoHold.length === maxItems" (click) = "addItem(item)">Add to Cargo Hold</button>
+            <!-- <div class="button"*ngIf = "cargoHold.length === maxItems ||cargoHold.mass + item.mass > maximumAllowedMass; else buttonEnabled"> -->
+            <button [disabled] = "buttonDisabled(item)" [class.active]= "!buttonDisabled(item)"
+            (click) = "addItem(item)">Add to Cargo Hold</button>
+            <!-- <button [disabled] = "cargoHold.mass + item.mass > maximumAllowedMass" (click) = "addItem(item)">Add to Cargo Hold</button> -->
             <!-- <button disabled>Can't click me!</button> -->
             {{item.name}}, {{item.mass}} kg
+            <!-- </div> -->
         </li>
     </ol>
 </div>
@@ -18,7 +22,23 @@
         <li *ngFor="let equipment of cargoHold">{{equipment.name}}</li>
     </ol>
     <p>Mass in Hold: {{cargoMass}} kg</p>
-    <p>Mass Budget Remaining: {{<!-- Calculate mass remaining here. -->}} kg</p>
-    <!-- Add the "Empty Hold" button here. -->
+    <p [class.nearMaxMass] = "nearMaximumMass()">Mass Budget Remaining: {{massRemaining()}} kg</p>
+   <!-- Add the "Empty Hold" button here. -->
+   <button (click) = "cargoHold.splice(0); cargoMass = 0" >Empty Hold</button>
 </div>
 
+<!-- <ng-template #buttonEnabled>
+    <div class="displayBox">
+        <h3>Equipment</h3>
+        <ol>
+            <li *ngFor="let item of equipmentItems"> -->
+                <!-- "Add to Cargo Hold" button goes here. -->
+                <!-- <div class="button"*ngIf = "cargoHold.length === maxItems ||cargoHold.mass + item.mass > maximumAllowedMass; else buttonEnabled"> -->
+                <!-- <button (click) = "addItem(item)">Add to Cargo Hold</button> -->
+                <!-- <button disabled>Can't click me!</button> -->
+                <!-- {{item.name}}, {{item.mass}} kg
+                </div>
+            </li>
+        </ol>
+    </div>
+        </ng-template> --> 
